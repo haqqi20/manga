@@ -771,20 +771,50 @@ public function index(Request $request)
         return array_reverse($logs);
     }
 
+    /**
+     * Proxy gambar untuk halaman admin chapter.
+     * Hanya URL publik http(s), tanpa redirect, dan hanya respons bertipe gambar
+     * (mencegah SSRF ke jaringan internal dan penyajian HTML/skrip).
+     */
     public function proxy(Request $request)
     {
-        $url = $request->query('url');
-        if (!$url) abort(404);
+        $url = (string) $request->query('url', '');
+        $parts = parse_url($url);
+        $scheme = strtolower($parts['scheme'] ?? '');
+        $host = $parts['host'] ?? '';
+
+        if (!in_array($scheme, ['http', 'https'], true) || $host === '' || isset($parts['user'])) {
+            abort(404);
+        }
+
+        // Semua IP host harus publik; IP yang sudah dicek dipakai langsung (anti DNS rebinding).
+        $ips = filter_var($host, FILTER_VALIDATE_IP) ? [$host] : (gethostbynamel($host) ?: []);
+        $public = array_filter($ips, fn ($ip) => filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE));
+        if (!$ips || count($public) !== count($ips)) {
+            abort(404);
+        }
+        $port = $parts['port'] ?? ($scheme === 'https' ? 443 : 80);
 
         try {
-            $response = Http::withoutVerifying()->timeout(30)->get($url);
-            if ($response->successful()) {
-                return response($response->body(), 200)
-                    ->header('Content-Type', $response->header('Content-Type') ?: 'image/jpeg')
-                    ->header('Cache-Control', 'public, max-age=86400');
+            $response = Http::timeout(20)
+                ->withOptions([
+                    'allow_redirects' => false,
+                    'curl' => [CURLOPT_RESOLVE => ["{$host}:{$port}:{$ips[0]}"]],
+                ])
+                ->get($url);
+
+            $type = strtolower((string) $response->header('Content-Type'));
+            $body = $response->body();
+
+            if ($response->successful() && str_starts_with($type, 'image/') && !str_contains($type, 'svg')
+                && strlen($body) > 0 && strlen($body) <= 20 * 1024 * 1024) {
+                return response($body, 200)
+                    ->header('Content-Type', $type)
+                    ->header('X-Content-Type-Options', 'nosniff')
+                    ->header('Cache-Control', 'private, max-age=86400');
             }
         } catch (\Exception $e) {
-            Log::error("Proxy error for $url: " . $e->getMessage());
+            Log::warning('Image proxy error: ' . $e->getMessage(), ['url' => $url]);
         }
 
         abort(404);

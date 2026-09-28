@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\MangaController;
 
-Route::get('/image-proxy', [MangaController::class , 'proxy'])->name('image.proxy');
+Route::get('/image-proxy', [MangaController::class , 'proxy'])->middleware(['auth', 'admin'])->name('image.proxy');
 
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\PublicMangaController;
