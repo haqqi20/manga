@@ -1,0 +1,1 @@
+import{j as n}from"./app-DUoIg2Hl.js";function x({value:t,className:r="",children:e,...a}){return n.jsx("label",{...a,className:"block text-sm font-medium text-gray-700 dark:text-gray-300 "+r,children:t||e})}function l({message:t,className:r="",...e}){return t?n.jsx("p",{...e,className:"text-sm text-red-600 dark:text-red-400 "+r,children:t}):null}export{x as I,l as a};

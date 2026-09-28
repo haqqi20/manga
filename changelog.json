@@ -1,0 +1,100 @@
+[
+    {
+        "version": "1.0.6",
+        "date": "2026-04-01T00:00:00",
+        "description": "Security & Manga Chapter Scraper Update",
+        "changes": [
+            "Added automated manga chapter scraping from admin panel",
+            "Added 'Check & Import Missing Chapters' with progress bar",
+            "Added bulk chapter import with sequential processing",
+            "Redesigned Manga Hero Slider - compact glassmorphic design",
+            "Slider now supports dark/light mode with adaptive colors",
+            "Cover poster as ambient background (no blur, like detail page)",
+            "Added robots.txt for SEO optimization",
+            "Re-enabled X-Frame-Options clickjacking protection",
+            "Security headers hardened (HSTS, nosniff, XSS filter, etc.)",
+            "Fixed 'Column not found: views' SQL error on explore page",
+            "Removed duplicate genres from Detail Info tab",
+            "OVA episodes now treated as last episode correctly"
+        ]
+    },
+    {
+        "version": "1.0.5",
+        "date": "2026-03-30T00:00:00",
+        "description": "Manga Detail & Reading Experience Overhaul",
+        "changes": [
+            "Redesigned manga detail page with card-based layout",
+            "Added animated tab navigation (Chapters/Detail Info/More Series)",
+            "Added reading progress tracking (read chapter highlighting)",
+            "Added continue reading button for returning readers",
+            "Improved chapter list with search and sort functionality",
+            "Added comment system with replies for manga pages",
+            "Added user avatar system with badge support",
+            "Added manga rating system (1-10 scale)",
+            "Added bookmark/favorite functionality"
+        ]
+    },
+    {
+        "version": "1.0.4",
+        "date": "2026-03-28T00:00:00",
+        "description": "Manga Import & Scraper Improvements",
+        "changes": [
+            "Enhanced manga chapter importer with fallback scraping",
+            "Added intelligent URL resolution and slug cleaning",
+            "Improved cache management to prevent stale 404 responses",
+            "Added dynamic source URL handling in import controller",
+            "Fixed chapter image extraction for multiple manga sources"
+        ]
+    },
+    {
+        "version": "1.0.3",
+        "date": "2026-03-26T00:00:00",
+        "description": "UI/UX Enhancements",
+        "changes": [
+            "Premium cinematic redesign of home page",
+            "Added hero slider with Swiper.js integration",
+            "Responsive layout optimization for mobile and tablet",
+            "Dark mode support across all pages",
+            "Added Google Fonts (Inter) for modern typography"
+        ]
+    },
+    {
+        "version": "1.0.2",
+        "date": "2026-03-24T00:00:00",
+        "description": "Anime Streaming Features",
+        "changes": [
+            "Added multi-mirror video player support",
+            "Episode management with OVA support",
+            "Anime explore page with filtering and sorting",
+            "Character pages with favorite functionality",
+            "Google OAuth social login integration"
+        ]
+    },
+    {
+        "version": "1.0.1",
+        "date": "2026-03-23T00:00:00",
+        "description": "Admin Panel & Core Fixes",
+        "changes": [
+            "Admin dashboard with statistics overview",
+            "License management system",
+            "Rate limiting on API endpoints",
+            "Login throttling (5 attempts max)",
+            "Input validation on all forms"
+        ]
+    },
+    {
+        "version": "1.0.0",
+        "date": "2026-03-22T00:00:00",
+        "description": "Initial Release",
+        "changes": [
+            "Manga reader with chapter navigation",
+            "Anime streaming with episode management",
+            "Admin panel with full CRUD operations",
+            "License management system",
+            "Import manga from external sources",
+            "User bookmark and reading history",
+            "Responsive design with dark mode",
+            "Sitemap generation for SEO"
+        ]
+    }
+]
